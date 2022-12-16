@@ -71,7 +71,10 @@ create table Departament (
 create table Dept_locations(
 	Dnumber int not null,
     Dlocation varchar(15) not null,
-    primary key (Dnumber, Dlocation), -- chave primaria composta
+    primary key (Dnumber, Dlocation), 
+    /*chave primaria composta, pois um departamento pode ter mais de uma localização, 
+    no entando a chave primaria será composta pelo numero do departamento e o numero da localização.
+    */
     foreign key (Dnumber) references Departament(Dnumber)
 );
 
@@ -80,16 +83,31 @@ create table Project (
     Pnumber int not null,
     Plocation varchar(15),
     Dnum int not null,
-    primary key (Pnumber),
+   
+    -- ------------------------------CONSTRAINTS ------------------------------------------------------------
+	primary key (Pnumber),
     unique (Pname), -- um projeto estara associado apenas a um nome
     foreign key (Dnum) references Departament(Dnumber)
 );
--- esta é uma tabela que depende da existencia de outras duas tabelas, ou seja, é uma entidade fraca.
+
+
+/* Esta é uma tabela que depende da existencia de outras duas tabelas, ou seja, é uma entidade fraca.
+Ela foi criada com o intuito de gerenciar a quantidade de horas em que um  funcionário esta dedicando em cada projeto.
+*/
 create table Works_on(
-	Essn char(9), -- deve ser not null
+	Essn char(9),  
+		/*
+		Em situações onde se usa numeros indentificadores, 
+		o tipo do dado deve ser char e não varchar, pois a quantidade de numeros não pode ter variação como por exemplo cpf ou rg, 
+		além disso deve ser especificado como not null para que o usuário seja obrigado a fornecer um valor.
+		*/
     Pno int not null,
     Hours decimal(3,1) not null,
+    -- ---------------------CONSTRAINTS-------------------------------------
 	primary key (Essn, Pno),
+    /*
+    Chave primaria composta por campos herdados das tabelas Employee e Works_on
+    */
     foreign key (Essn) references Employee(Ssn),
     foreign key (Pno) references project(Pnumber)
 );
@@ -105,7 +123,7 @@ create table Dependent(
 );
 
 
-show tables;
+show tables; -- apresenta as tabelas criadas.
 desc dependent; -- apresenta a descrição de uma tabela 
 
 -- Consultando os tipos de dados 
