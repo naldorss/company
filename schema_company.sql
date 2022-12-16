@@ -47,7 +47,7 @@ Create table Employee( -- essaa tabela foi criada especificando o schema a qual 
     Minit char, -- nome do meio, essa informação pode ser nula
     Lname varchar(15) not null,
     Ssn char(9) not null,  -- pode tipo de registro utilizado no exterior, é como nosso RG.
-    Bdate date, 
+    Bdate date, -- data do aniversário
     Address varchar(30), -- Neste caso o endereço foi criado como um unico campo.
     Sex char, 
     Salary decimal(10,2),
@@ -71,7 +71,7 @@ create table Departament (
 create table Dept_locations(
 	Dnumber int not null,
     Dlocation varchar(15) not null,
-    primary key (Dnumber, Dlocation),
+    primary key (Dnumber, Dlocation), -- chave primaria composta
     foreign key (Dnumber) references Departament(Dnumber)
 );
 
@@ -81,12 +81,12 @@ create table Project (
     Plocation varchar(15),
     Dnum int not null,
     primary key (Pnumber),
-    unique (Pname),
+    unique (Pname), -- um projeto estara associado apenas a um nome
     foreign key (Dnum) references Departament(Dnumber)
 );
 -- esta é uma tabela que depende da existencia de outras duas tabelas, ou seja, é uma entidade fraca.
 create table Works_on(
-	Essn char(9),
+	Essn char(9), -- deve ser not null
     Pno int not null,
     Hours decimal(3,1) not null,
 	primary key (Essn, Pno),
