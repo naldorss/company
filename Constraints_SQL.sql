@@ -1,9 +1,6 @@
 create schema if not exists company_constraints;
 use company_constraints;
 
-select * from information_schema.table_constraints
-	where constraint_schema = 'company_constraints';
-
 -- restrição atribuida a um domínio
 -- create domain D_num as int check(D_num > 0 and D_num < 21);
 
@@ -30,7 +27,13 @@ alter table employee
 	foreign key(Super_ssn) references employee(Ssn)
     on delete set null
     on update cascade;
-
+-- -----------------------------------------------------------------------------------------------------
+    /* 
+    ON UPDATE CASCADE
+    Evento em cascata, ou seja, sempre que uma tabela pai é atualizada, suas filhas tbm
+    receberão a atualização 
+    */
+-- -----------------------------------------------------------------------------------------------------
 alter table employee modify Dno int not null default 1;
 
 desc employee;
@@ -46,7 +49,13 @@ create table departament(
     constraint unique_name_dept unique(Dname),
     foreign key (Mgr_ssn) references employee(Ssn)
 );
+-- -----------------CONSULTANDO AS CONSTRAINTS RELACIONADAS AO MEU BANCO DE DADOS-----------------------------------------
+select * from information_schema.table_constraints
+where constraint_schema = 'company_constraints'  and table_name = 'dept_locations'
+;
 
+select * from information_schema.referential_constraints
+where constraint_schema = 'company_constraints';
 desc departament;
 
 -- 'def', 'company_constraints', 'departament_ibfk_1', 'company_constraints', 'departament', 'FOREIGN KEY', 'YES'
