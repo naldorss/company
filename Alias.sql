@@ -26,3 +26,8 @@ from
     dept_locations as l
 where d.Dnumber = l.Dnumber
 ;
+
+-- Usando ALIAS para renomear uma coluna concatenada
+select concat(Fname, ' ', Lname) as Employee 
+from employee
+;
